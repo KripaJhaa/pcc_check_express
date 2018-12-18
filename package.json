@@ -1,0 +1,23 @@
+{
+  "name": "pcc_project",
+  "version": "1.0.0",
+  "description": "pcc check",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "pcc",
+    "check_dir"
+  ],
+  "author": "kripa shankar jha",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.4.0"
+  }
+}
