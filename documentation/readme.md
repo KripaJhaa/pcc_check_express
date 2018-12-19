@@ -1,13 +1,6 @@
-# How to change DB 
-> The configured Api is using Mongo-Client.
+# Configure your DB:
+``` 
+use mongoClient either library for manupulating MongoDb or,
 
-> Make changes to db-MC.js file 
-
-> And connect accordingly inside the server.js file.
-
-## Exposed Api through this Back-end
-
->"localhost:8800/search/:company_name"
-
->"localhost:8800/details"   Post REQUEST
+Use Mongoose. Which gives more flexibility with lesser line of code.
 

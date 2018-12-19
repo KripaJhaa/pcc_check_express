@@ -1,5 +1,5 @@
 const express = require('express');
-const dbConnect = require('./db-mc').Mongo_Client;
+//const dbConnect = require('./db-mc').Mongo_Client;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
@@ -8,11 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser());
+require('./db')(app); //initializing mongoose db
 
 //connecting to mongo-client
-dbConnect.connectDB();
+//dbConnect.connectDB();
 
-var port = Number(process.env.PORT || 8800);
+var port = Number(process.env.PORT || 8802);
 
 //initializing app which is inside controller
 var appInit = require('./controllers/search.controller').MainClass; //extracting perticular

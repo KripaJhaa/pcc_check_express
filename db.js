@@ -1,13 +1,29 @@
-var Mongoose = require('mongoose')
-var url = 'mongodb://13.232.174.178:27017/EChecks';
-Mongoose.connect(url);
+const config = require('./Config/mongoUrl');
+const mongoose = require("mongoose");
 
-var schema = Mongoose.Schema
+module.exports = function (app) {
 
-var ModelSchema = new schema();
+    mongoose.connect(config.mongoUrl, {
+        useNewUrlParser: true
+    }, (err, db) => {
+        if (!err) {
+            console.log('mongoose connected...')
+        }
+        return db;
+    });
+    mongoose.Promise = global.Promise;
 
-var m = Mongoose.model('echecksdatas', ModelSchema)
-m.count({}, (err, result) => {
-    if (!err)
-        console.log(result)
-})
+    process.on("SIGINT", cleanup);
+    process.on("SIGTERM", cleanup);
+    process.on("SIGHUP", cleanup);
+
+    if (app) {
+        app.set("mongoose", mongoose);
+    }
+};
+
+function cleanup() {
+    mongoose.connection.close(function () {
+        process.exit(0);
+    });
+}

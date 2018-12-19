@@ -1,38 +1,57 @@
-const dbroute = require('../../db-mc');
+const db = require('../../db');
+const utilityFunc = require('../../UtilityFunction/all_utilities')
 
 module.exports.MainController = {
 
 
-    search_companies(req, res) {
-        var company_search = req.params.company_name.toUpperCase();
-        var db = dbroute.getDB().db('empdatastore');
+    async AddDetails(req, res) {
+        //console.log(req.headers)
+        console.log('inside search companies')
+        console.log(req.body);
 
-        console.log('company_search', company_search);
-
-        db.collection('company_search').find({
-            'name': {
-                $regex: ".*" + company_search + ".*"
-            }
-        }).toArray((err, docs) => {
-            res.json(docs);
-        });
+        try {
+            const savedRes = await utilityFunc.crudPcc.save(req.body);
+            res.send({
+                "greeting": savedRes
+            }).status(200);
+        } catch (err) {
+            res.send(err).status(402);
+        }
     },
 
-    get_details(req, res) {
-        var comapany_name = req.body.company_name;
-        var company_prefix = comapany_name.substring(0, 3).toLowerCase().trim();
+    async GetCity(req, res) {
+        // console.log('inside state module1q1', utilityFunc.stateCity.getState);
 
-        console.log('company_search in GetDetail', company_prefix);
+        try {
+            const response = await utilityFunc.stateCity.getCity(req.body.state)
+            res.send({
+                "done": response
+            })
 
-        var db = dbroute.getDB().db('empdatastore');
-        if (!db) return res.status(400).send("User not Found");
+        } catch (err) {
+            res.send(err).status(402);
+        }
+    },
+    async GetState(req, res) {
+        // console.log('inside state module1q1', utilityFunc.stateCity.getState);
 
-        db.collection(company_prefix).find({
-            "name": "" + comapany_name
-        }).toArray((err, result) => {
-            console.log(JSON.stringify(result))
-            res.json(result);
-        });
+        try {
+            const response = await utilityFunc.stateCity.getState()
+            res.send({
+                "done": response
+            })
+
+        } catch (err) {
+            res.send(err).status(402);
+        }
+    },
+
+    UpdateDetails(req, res) {
+        console.log('inside get details')
+        res.send({
+            "greeting": 'bye'
+        }).status(200);
+
     }
 
 
