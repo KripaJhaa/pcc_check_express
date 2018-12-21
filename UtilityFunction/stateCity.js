@@ -1,27 +1,23 @@
  const mongoose = require('mongoose')
  const stateCityList = mongoose.model("state_cities", {});
 
- const getCity = (item) => {
-     console.log(item);
-
-     return stateCityList.find({
-         state: item
-     });
-
- }
- const getState = (item) => {
-     console.log(item);
-
-     return stateCityList.find({
-
-     }, {
-         _id: 0,
-         "state": 1
-     });
-
- }
-
  module.exports = {
-     getState,
-     getCity
+
+     getCity(item) {
+         console.log(item + ' cities requested')
+         return stateCityList.findOne({
+             state: item
+         }, {
+             _id: 0,
+             "city": 1
+         })
+     },
+
+     getState() {
+         console.log('states requested')
+         return stateCityList.find({}, {
+             _id: 0,
+             "state": 1
+         })
+     }
  }

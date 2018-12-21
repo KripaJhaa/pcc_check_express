@@ -18,35 +18,30 @@ module.exports.MainController = {
             res.send(err).status(402);
         }
     },
-
     async GetCity(req, res) {
-        // console.log('inside state module1q1', utilityFunc.stateCity.getState);
-
         try {
+
             const response = await utilityFunc.stateCity.getCity(req.body.state)
-            res.send({
-                "done": response
-            })
+            res.status(200).json(response);
 
         } catch (err) {
-            res.send(err).status(402);
+
+            res.status(402).json({
+                "err": "occur"
+            });
         }
     },
     async GetState(req, res) {
-        // console.log('inside state module1q1', utilityFunc.stateCity.getState);
 
         try {
             const response = await utilityFunc.stateCity.getState()
-            res.send({
-                "done": response
-            })
+            res.status(200).json(response);
 
         } catch (err) {
             res.send(err).status(402);
         }
     },
-
-    UpdateDetails(req, res) {
+    async UpdateDetails(req, res) {
         console.log('inside get details')
         res.send({
             "greeting": 'bye'
